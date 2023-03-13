@@ -41,10 +41,10 @@ public class Matrix {
     }
     public static Matrix Translate(double x, double y, double z) {
         return new Matrix(new double[][]{
-                {1, 0, 0, x},
-                {0, 1, 0, y},
-                {0, 0, 1, z},
-                {0, 0, 0, 1}
+                {1, 0, 0, 0},
+                {0, 1, 0, 0},
+                {0, 0, 1, 0},
+                {x, y, z, 1}
         });
     }
 

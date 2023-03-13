@@ -42,7 +42,7 @@ public class Panel extends JPanel implements ActionListener {
         //Matrix matRotated = Matrix.Rotate(theta,0,theta);
         Matrix matRotatedX = Matrix.RotateX(theta);
         Matrix matRotatedZ = Matrix.RotateZ(theta * 0.5);
-        Matrix matTranslated = Matrix.Translate(0, 0, 0);
+        Matrix matTranslated = Matrix.Translate(0, 0, 10);
         Matrix matScale = Matrix.Scale(1, 1, 1);
 
         Matrix matWorld;
@@ -59,28 +59,7 @@ public class Panel extends JPanel implements ActionListener {
             triTransformed.p[1] = Vector3.MultiplyMatrixVector(tri.p[1], matWorld);
             triTransformed.p[2] = Vector3.MultiplyMatrixVector(tri.p[2], matWorld);
 
-
-            Triangle triScaledZ = new Triangle(), triRotatedZ = new Triangle(), triRotatedZX = new Triangle();
-
-            // Rotate in Z-Axis
-            triRotatedZ.p[0] = Vector3.MultiplyMatrixVector(tri.p[0], matRotZ);
-            triRotatedZ.p[1] = Vector3.MultiplyMatrixVector(tri.p[1], matRotZ);
-            triRotatedZ.p[2] = Vector3.MultiplyMatrixVector(tri.p[2], matRotZ);
-
-            // Rotate in X-Axis
-            triRotatedZX.p[0] = Vector3.MultiplyMatrixVector(triRotatedZ.p[0], matRotX);
-            triRotatedZX.p[1] = Vector3.MultiplyMatrixVector(triRotatedZ.p[1], matRotX);
-            triRotatedZX.p[2] = Vector3.MultiplyMatrixVector(triRotatedZ.p[2], matRotX);
-
-
-            // Offset into the screen
-            Triangle triTranslated = triRotatedZX;
-            triTranslated.p[0].z = triRotatedZX.p[0].z + 10.0;
-            triTranslated.p[1].z = triRotatedZX.p[1].z + 10.0;
-            triTranslated.p[2].z = triRotatedZX.p[2].z + 10.0;
-            triTransformed = triTranslated;
-
-
+            //Calc Normals and normalize
             Vector3 normal;
             normal = Vector3.getNormal(triTransformed);
             normal = Vector3.normalize(normal);
