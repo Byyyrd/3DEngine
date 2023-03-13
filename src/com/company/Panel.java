@@ -154,21 +154,9 @@ public class Panel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         theta += (dt / 60) * 0.05;
 
-        // Rotation Z
-        matRotZ.m[0][0] = Math.cos(theta);
-        matRotZ.m[0][1] = Math.sin(theta);
-        matRotZ.m[1][0] = -Math.sin(theta);
-        matRotZ.m[1][1] = Math.cos(theta);
-        matRotZ.m[2][2] = 1;
-        matRotZ.m[3][3] = 1;
 
-        // Rotation X
-        matRotX.m[0][0] = 1;
-        matRotX.m[1][1] = Math.cos(theta * 0.5f);
-        matRotX.m[1][2] = Math.sin(theta * 0.5f);
-        matRotX.m[2][1] = -Math.sin(theta * 0.5f);
-        matRotX.m[2][2] = Math.cos(theta * 0.5f);
-        matRotX.m[3][3] = 1;
+        matRotZ = Matrix.RotateZ(theta);
+        matRotX = Matrix.RotateX(theta * 0.5);
 
 
     }

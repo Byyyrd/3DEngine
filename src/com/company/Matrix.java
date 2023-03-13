@@ -70,10 +70,11 @@ public class Matrix {
     }
     public static Matrix RotateY(double y) {
         Matrix matRotY = new Matrix(new double[][]{
-                {Math.cos(y * 0.5f), 0, 0, -Math.sin(y * 0.5f)},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {Math.sin(y * 0.5f), 0, 0, Math.cos(y * 0.5f)}
+                {Math.cos(y * 0.5f), 0, -Math.sin(y * 0.5f),0},
+                {0, 1, 0, 0},
+                {Math.sin(y * 0.5f), 0,  Math.cos(y * 0.5f),0},
+                {0, 0, 0, 1}
+
         });
         return matRotY;
     }
@@ -81,7 +82,7 @@ public class Matrix {
         Matrix matRotZ = new Matrix(new double[][]{
                 {Math.cos(z * 0.5f), Math.sin(z * 0.5f), 0, 0},
                 {-Math.sin(z * 0.5f), Math.cos(z * 0.5f), 0, 0},
-                {0, 0, 0, 1},
+                {0, 0, 1, 0},
                 {0, 0, 0, 1}
         });
         return matRotZ;
