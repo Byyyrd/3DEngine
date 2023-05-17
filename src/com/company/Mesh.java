@@ -38,38 +38,42 @@ public class Mesh {
         return mesh;
     }
     public boolean loadObjectFromFile(String filename) {
-        try {
-            tris = new Triangle[0];
-            File myObj = new File(filename);
-            Scanner reader = new Scanner(myObj);
-            ArrayList<Vector3> vertices = new ArrayList<>();
-            ArrayList<Triangle> triangles = new ArrayList<>();
-            while (reader.hasNextLine()) {
-                String data = reader.nextLine();
-                String[] splitData = data.split(" ");
-                if (Objects.equals(splitData[0], "v")){
-                    Vector3 v = new Vector3();
-                    v.x = Double.parseDouble(splitData[1]);
-                    v.y = Double.parseDouble(splitData[2]);
-                    v.z = Double.parseDouble(splitData[3]);
-                    vertices.add(v);
-                }
-                if (Objects.equals(splitData[0], "f")){
-                    Triangle t = new Triangle();
-                    t.p[0] = vertices.get(Integer.parseInt(splitData[1])-1);
-                    t.p[1] = vertices.get(Integer.parseInt(splitData[2])-1);
-                    t.p[2] = vertices.get(Integer.parseInt(splitData[3])-1);
-                    triangles.add(t);
-                }
 
-            }
-            tris = triangles.toArray(tris);
-            reader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+            Thread thread = new Thread(()-> {
+                try {
+                    tris = new Triangle[0];
+                    File myObj = new File(filename);
+                    Scanner reader = new Scanner(myObj);
+                    ArrayList<Vector3> vertices = new ArrayList<>();
+                    ArrayList<Triangle> triangles = new ArrayList<>();
+
+                    while (reader.hasNextLine()) {
+                        String data = reader.nextLine();
+                        String[] splitData = data.split(" ");
+                        if (Objects.equals(splitData[0], "v")){
+                            Vector3 v = new Vector3();
+                            v.x = Double.parseDouble(splitData[1]);
+                            v.y = Double.parseDouble(splitData[2]);
+                            v.z = Double.parseDouble(splitData[3]);
+                            vertices.add(v);
+                        }
+                        if (Objects.equals(splitData[0], "f")){
+                            Triangle t = new Triangle();
+                            t.p[0] = vertices.get(Integer.parseInt(splitData[1])-1);
+                            t.p[1] = vertices.get(Integer.parseInt(splitData[2])-1);
+                            t.p[2] = vertices.get(Integer.parseInt(splitData[3])-1);
+                            triangles.add(t);
+                        }
+
+                    }
+                    tris = triangles.toArray(tris);
+                    reader.close();
+                } catch (FileNotFoundException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
+            });
+            thread.start();
+            return true;
     }
 }
